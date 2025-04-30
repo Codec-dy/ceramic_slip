@@ -18,6 +18,7 @@ const Email = ({ onSubmit,to }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    emailData.to = to;
     const retVal = await sendEmail(api+"api/sendEmail", emailData,adminAttachments); // Pass email data to the parent component or backend
     console.log(retVal)
     if (retVal) {
@@ -46,11 +47,11 @@ const Email = ({ onSubmit,to }) => {
             type="email"
             id="to"
             name="to"
-            value={emailData.to}
+            value={to}
             onChange={handleChange}
             placeholder="Recipient's email"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
+            disabled
           />
         </div>
         <div className="mb-4">
