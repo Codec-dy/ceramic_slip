@@ -39,7 +39,7 @@ const dataValidation = (key,data) => {
 }
 
 
-const submit = async (url, data,images) => {
+const submit = async (url, data,images,setLoading) => {
     const formData = new FormData();
     for(var key in data){
         if(!dataValidation(key,data[key])){
@@ -56,6 +56,7 @@ const submit = async (url, data,images) => {
     })
     
     try {
+        setLoading(true)
         const response = await axios.post(url, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',

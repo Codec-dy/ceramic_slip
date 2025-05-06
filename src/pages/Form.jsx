@@ -8,7 +8,9 @@ import axios from 'axios'
 import { submit } from '../crud'
 
 const Form = () => {
+
     const {shippingCost,setUploadedFiles,setCost,uploadedFiles,setUser,user,api,Cost} = useContext(Context)
+    const [loading, setLoading] = useState(false)
     const handleFileUpload = (event) => {
         const file = event.target.files[0]
         if (file) {
@@ -30,23 +32,39 @@ const Form = () => {
         user.totalCost = Cost
         console.log(user)
         try{
-       const retVal = await submit(api+"api/formUpload",user,uploadedFiles)       
+       const retVal = await submit(api+"api/formUpload",user,uploadedFiles,setLoading)       
+
        if(retVal){
         setUser({name:'',email:'',phone:'',address:'',shipping:'',date:user.date, totalCost:0})
         setUploadedFiles([])
         setCost(0)
+        setLoading(false)
+       }else{
+        setLoading(false)
        }
     }catch(err){
         console.log(err)
+        setLoading(false)
         }
     }
 
+
+    useEffect(() => {
+        document.title = 'ArtHaus Ceramic Slip'
+        // Fetch settings data if needed
+       
+    },[])
   return (
     <div className='flex flex-col bg-gray-100 p-3 gap-4  w-full'>
-    <div className='flex flex-col items-center bg-gray-100 p-3 gap-7 max-w-[640px] w-full'>
+     <div className='flex flex-col items-center bg-gray-100 p-3 gap-7 max-w-[640px] w-full min-h-screen'>
         <h1 className="text-3xl sm:text-6xl givColor font-bold underline">ArtHaus Ceramic Slip</h1>
         <form>
-            <TwoFields Label1="Full Name" Label2="Date" type1="text" type2="date" placeholder1="Enter your full name" name1="name" name2="date" placeholder2="Enter Date"/>
+        {loading && 
+          
+             <div className="loader "></div> 
+           
+            }
+        {!loading && ( <> <TwoFields Label1="Full Name" Label2="Date" type1="text" type2="date" placeholder1="Enter your full name" name1="name" name2="date" placeholder2="Enter Date"/>
             <TwoFields Label2="Email" Label1="Phone" type2="email" type1="Enter phone number" placeholder2="Enter Your Email" name1="phone" name2="email" placeholder1="Enter Your Phone Number"/>
             <TwoFields Label1="Address" type1="text" name1="address"  placeholder1="Enter your address" />
             <div className="mb-4 w-full flex gap-5 flex-row items-center content-center">
@@ -78,7 +96,10 @@ const Form = () => {
             <h3 className='font-bold givColor'>Ceramics are considered abandoned if not picked up 30 days after being contacted</h3>
             
             <Table onDelete={handleDelete}/>
-            <div className='w-full mt-6'><Button text="Submit" perform={handleSubmit}/></div>
+            <div className=' mt-6 max-w-[300px]'><TwoFields Label1="Code" type1="text" name1="Code"  placeholder1="Enter code to submit" /></div>
+            <div className='w-full'><Button text="Submit" perform={handleSubmit}/></div>
+        </>
+        )}    
         </form>
     </div>
     </div>
