@@ -12,8 +12,7 @@ const Settings = () => {
   useEffect(() => {
     document.title = 'Settings | Admin Dashboard'
     // Fetch settings data if needed
-    fetchData(`${api}api/getCode`,SetUser)
-    console.log(user)
+    fetchData(`${api}api/getCode`,SetUser,"single")
   },[])
 
   const handleChange = (e) => {

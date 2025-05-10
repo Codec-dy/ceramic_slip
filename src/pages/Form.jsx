@@ -6,6 +6,7 @@ import Button from '../components/Button'
 import Table from '../components/Table'
 import axios from 'axios'
 import { submit } from '../crud'
+import { s } from 'framer-motion/client'
 
 const Form = () => {
 
@@ -35,7 +36,7 @@ const Form = () => {
        const retVal = await submit(api+"api/formUpload",user,uploadedFiles,setLoading)       
 
        if(retVal){
-        setUser({name:'',email:'',phone:'',address:'',shipping:'',date:user.date, totalCost:0})
+        setUser({name:'',email:'',phone:'',address:'',shipping:'',shippingCost:0,date:user.date, totalCost:0,Code:''})
         setUploadedFiles([])
         setCost(0)
         setLoading(false)
@@ -67,23 +68,43 @@ const Form = () => {
         {!loading && ( <> <TwoFields Label1="Full Name" Label2="Date" type1="text" type2="date" placeholder1="Enter your full name" name1="name" name2="date" placeholder2="Enter Date"/>
             <TwoFields Label2="Email" Label1="Phone" type2="email" type1="Enter phone number" placeholder2="Enter Your Email" name1="phone" name2="email" placeholder1="Enter Your Phone Number"/>
             <TwoFields Label1="Address" type1="text" name1="address"  placeholder1="Enter your address" />
-            <div className="mb-4 w-full flex gap-5 flex-row items-center content-center">
+            <div className="mb-4 w-full flex gap-5 flex-row items-start content-center">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                     Need Shipping ({shippingCost} a box)
                 </label>
-                <div className='flex flex-row gap-2'>
-                    <input type="radio" className="scale-150" name='shipping' onChange={()=>setUser({...user,shipping:'yes'})} value="yes" checked={user.shipping === 'yes'} required/>
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Yes
-                    </label>
+                <div className='flex flex-col gap-2'>
+                    <div className='flex flex-row gap-2'>
+                        <input type="radio" className="scale-150" name='shipping' onChange={()=>setUser({...user,shipping:'yes'})} value="yes" checked={user.shipping === 'yes'} required/>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Yes
+                        </label>
+                    </div>
+                    {user.shipping === 'yes' && <div className='flex flex-row gap-2'>
+                        <input
+                            type="number"
+                            min="0"
+                            placeholder="Enter number"
+                            className="shadow appearance-none border rounded w-[140px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            value={user.boxs || ''} // Controlled input
+                            onChange={(e) => {
+                                const numberOfBoxes = Number(e.target.value);
+                                const shippingCostPerBox = Number(shippingCost.slice(1)); // Remove the "$" sign and convert to number
+                                const shippingTotal = numberOfBoxes * shippingCostPerBox;
+                                const newTotalCost = shippingTotal + (Cost - user.shippingCost || 0); // Adjust total cost
+                                setCost(newTotalCost);
+                                setUser({ ...user, shippingCost: shippingTotal, boxs: numberOfBoxes }); // Save shipping cost and box count in user state
+                            }}
+                        />
+                        </div>}
                 </div>
                 <div className='flex flex-row gap-2'>
-                    <input type="radio" className="scale-150" name='shipping' value="no" onChange={()=>setUser({...user,shipping:'no'})} checked={user.shipping === 'no'} required/>
+                    <input type="radio" className="scale-150" name='shipping' value="no" onChange={()=>{setCost(Cost-user.shippingCost);setUser({...user,shipping:'no',shippingCost:0,boxs:0})}} checked={user.shipping === 'no'} required/>
                     <label className="block text-gray-700 text-sm font-bold mb-2">
                         No
                     </label>
                 </div>
             </div>
+
             <label htmlFor="file-upload" className='flex flex-row gap-5 mb-4 w-full border-2 border-gray-300 rounded-md p-2 items-center'>
             <img src={assets.uploadIcon} alt="Upload Icon" className='w-20 h-20' />
             <div>

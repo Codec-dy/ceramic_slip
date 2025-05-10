@@ -7,8 +7,8 @@ import AdminEditDelete from '../../components/admin/AdminEditDelete'
 import { assets } from '../../assets/assets'
 
 
-const Slips = () => {
-   const [sortType, setSortType] = useState('date')
+const Archived = () => {
+   const [sortType, setSortType] = useState('none')
    const [from,setFrom] = useState('hl')
     const {api} = useContext(Context)
     const [slips,setSlips] = useState([])
@@ -16,7 +16,8 @@ const Slips = () => {
     
   useEffect(() => {
     document.title = 'Ceramic Slips | Admin Dashboard'
-    fetchData(api+"api/getFormData",setSlips,"pending")
+    fetchData(api+"api/getFormData",setSlips,"completed")
+   
 },[])
   
 
@@ -28,7 +29,7 @@ const Slips = () => {
     <AdminTemplate>
     <div  className='flex flex-col gap-3 overflow-y-auto w-full p-4'>
        <div className='flex flex-row justify-between items-center'> 
-        <h1 className='text-2xl font-semibold text-left'>Ceramic Slips</h1> 
+        <h1 className='text-2xl font-semibold text-left'>Archived Slips</h1> 
         <div className='flex flex-row gap-2'>
           <select value={sortType} onChange={(e)=>setSortType(e.target.value)} className='border-2 border-gray-300  text-sm p-4'>
               <option value="none">Sort by: None</option>
@@ -47,10 +48,10 @@ const Slips = () => {
           <img src={assets.placeholder}/>
           <p className='text-gray-500 text-3xl'>No Forms to display</p>
           </div>}
-        {slips.length>0 && slips.map((slip, index) => <div key={index} ><SlipsWidget data={slip} /><AdminEditDelete id={slip._id}/></div>)}
+        {slips.length>0 && slips.map((slip, index) => <div key={index} ><SlipsWidget data={slip} /></div>)}
     </div>
     </AdminTemplate>
   )
 }
 
-export default Slips
+export default Archived

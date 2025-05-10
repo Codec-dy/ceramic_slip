@@ -3,7 +3,7 @@ import { assets } from '../assets/assets'
 import { Context } from '../context/CeramicContext'
 
 const Row = ({file,ind,handleDelete})=>{
-    const {uploadedFiles, setUploadedFiles,setCost,user,setUser} = useContext(Context)
+    const {uploadedFiles, setUploadedFiles,setCost,user} = useContext(Context)
     const ChangeVal = (e) => {
         const { name, value } = e.target;
         // file[name] = value;
@@ -12,7 +12,7 @@ const Row = ({file,ind,handleDelete})=>{
             newFiles[ind][name] = value;
             if (name === 'Cost') {
                 const totalCost = uploadedFiles.reduce((acc, file) => acc + parseFloat(file.Cost || 0), 0);
-                setCost(totalCost);
+                setCost(totalCost+user.shippingCost);
             }
             return newFiles;
         });

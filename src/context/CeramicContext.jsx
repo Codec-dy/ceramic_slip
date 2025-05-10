@@ -8,7 +8,7 @@ export const Context = createContext()
 const CeramicContext = (props) => {
     const [uploadedFiles, setUploadedFiles] = useState([])
     const [shippingCost, setShippingCost] = useState('$15')
-    const [user, setUser] = useState({name:'', email:'', phone:'', address:'', date:'', shipping:'', totalCost:0});
+    const [user, setUser] = useState({name:'', email:'', phone:'', address:'', date:'', shipping:'',shippingCost:0, totalCost:0,boxs:0,Code:''});
     const [refresh, setRefresh] = useState('');
     const [Cost, setCost] = useState(0);
      const [slips, setSlips] = React.useState([])

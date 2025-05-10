@@ -87,10 +87,15 @@ const adminLogin = async (url, data) => {
     }
 };
 
-const fetchData = async (url,set) => {
+const fetchData = async (url,set,status) => {
     const data = await axios.get(url).then((res) => {
-        
-        return res.data
+        const data = res.data
+        if(status=="single"){
+            return data
+        }
+        const pending = data.filter((item) => item.status === "pending");
+        const completed = data.filter((item) => item.status === "completed");
+        return status=="pending"?pending:completed
     }).catch((err) => {
         console.log(err)
     })
@@ -134,6 +139,17 @@ const handleDelete = async (url) => {
     }
 }
 
+const handleCompleted = async (url) => {
+    try {
+        const response = await axios.put(url);
+        toast.success("Successfully completed!");
+        return response.data; // Return the response data to the caller
+    } catch (error) {
+        console.error('Error:', error);
+        return false; // Return false to indicate failure
+    }
+}
+
 const sendEmail = async (url, data,attachments) => {
     try {
         data.attachments = attachments
@@ -157,5 +173,44 @@ const sendEmail = async (url, data,attachments) => {
     }
 };
 
+const sortSlips = (slips,setSlips,from,sortType)=>{
+    let slipsCopy = slips.slice();
+    switch (from) {
+      case 'lh':
+        if(sortType=='name'){
+          slipsCopy.sort((item1,item2)=>item1.name.localeCompare(item2.name))
+          setSlips(slipsCopy)
+        }
+        else if(sortType=='date'){
+          slipsCopy.sort((item1,item2)=>new Date(item1.date)-new Date(item2.date))
+          setSlips(slipsCopy)
+        }else if(sortType=='price'){
+          slipsCopy.sort((item1,item2)=>item1.totalCost-item2.totalCost)
+          setSlips(slipsCopy)
+        }
+        break;
+      case 'hl':
+        if(sortType=='name'){
+          slipsCopy.sort((item1,item2)=>item2.name.localeCompare(item1.name))
+          setSlips(slipsCopy)
 
-export {submit,adminLogin,fetchData,handleDelete,Edit,changeUser,sendEmail}
+        }
+        else if(sortType=='date'){
+          slipsCopy.sort((item1,item2)=>new Date(item2.date)-new Date(item1.date))
+          setSlips(slipsCopy)
+
+        }else if(sortType=='price'){
+          slipsCopy.sort((item1,item2)=>item2.totalCost-item1.totalCost)
+          setSlips(slipsCopy)
+
+        }      
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+
+export {submit,adminLogin,fetchData,handleDelete,Edit,changeUser,sendEmail,sortSlips,handleCompleted}

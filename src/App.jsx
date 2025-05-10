@@ -10,6 +10,7 @@ import Slips from './pages/admin/Slips.jsx'
 import Settings from './pages/admin/Settings.jsx'
 import AdminFormPreview from './pages/admin/AdminFormPreview.jsx'
 import ProtectedRoute from './pages/admin/ProtectedRoute.jsx'
+import Archived from './pages/admin/Archived.jsx'
 function App() {
 
   return (
@@ -46,6 +47,14 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <AdminFormPreview />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/dashboard/completedslips"
+                    element={
+                        <ProtectedRoute>
+                            <Archived />
                         </ProtectedRoute>
                     }
                 />
