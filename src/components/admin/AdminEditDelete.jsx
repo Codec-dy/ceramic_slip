@@ -9,10 +9,16 @@ const AdminEditDelete = ({id}) => {
   const delet = async () => {
     const retVal = await handleDelete(api+"api/deleteFormData?id="+id)
     setSlips(retVal)
+   setTimeout(() => {
+      window.location.reload()
+    }, 1500);
   }
   const completed = async () => {
     const retVal = await handleCompleted(api+"api/completed?id="+id)
     setSlips(retVal)
+    setTimeout(() => {
+      window.location.reload()
+    }, 1500);
   }
   return (
     <div className='flex flex-col sm:flex-row gap-4'>

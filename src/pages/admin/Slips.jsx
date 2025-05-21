@@ -10,8 +10,8 @@ import { assets } from '../../assets/assets'
 const Slips = () => {
    const [sortType, setSortType] = useState('date')
    const [from,setFrom] = useState('hl')
-    const {api} = useContext(Context)
-    const [slips,setSlips] = useState([])
+    const {api,setSlips,slips} = useContext(Context)
+    const [filter,setFilter] = useState([])
     
     
   useEffect(() => {
@@ -21,8 +21,8 @@ const Slips = () => {
   
 
   useEffect(() => {
-    sortSlips(slips,setSlips,from,sortType)
-  },[sortType,from])
+    sortSlips(slips,setFilter,from,sortType)
+  },[slips,sortType,from])
 
   return (
     <AdminTemplate>
@@ -43,11 +43,11 @@ const Slips = () => {
             </select>
         </div>
        </div>
-        {slips.length==0 && <div className='flex flex-col sm:justify-center items-center h-full w-full'>
+        {filter.length==0 && <div className='flex flex-col sm:justify-center items-center h-full w-full'>
           <img src={assets.placeholder}/>
           <p className='text-gray-500 text-3xl'>No Forms to display</p>
           </div>}
-        {slips.length>0 && slips.map((slip, index) => <div key={index} ><SlipsWidget data={slip} /><AdminEditDelete id={slip._id}/></div>)}
+        {filter.length>0 && filter.map((slip, index) => <div key={index} ><SlipsWidget data={slip} /><AdminEditDelete id={slip._id}/></div>)}
     </div>
     </AdminTemplate>
   )

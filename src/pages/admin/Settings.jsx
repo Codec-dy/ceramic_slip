@@ -8,6 +8,7 @@ const Settings = () => {
   const [admin,SetAdmin] = React.useState({})
   const [code,SetCode] = React.useState({})
   const [user,SetUser] = React.useState({})
+  const [show,SetShow] = React.useState(false)
   const {api} = useContext(Context)
   useEffect(() => {
     document.title = 'Settings | Admin Dashboard'
@@ -34,7 +35,7 @@ const Settings = () => {
         </div>
         <div className='flex flex-col sm:flex-row gap-1 sm:gap-4 items-baseline'>
           <label className='text-gray-700 text-sm font-bold mb-2'>password</label>
-          <input type="password" className='border border-gray-300 rounded-md p-2 w-full' placeholder='Enter new email' onChange={(e)=>{SetAdmin({...admin,password:e.target.value})}} />
+          <div className='flex flex-row border border-gray-300 rounded-md p-2 w-full'><input className='flex-1'  type={show?"text":"password"}  placeholder='Enter new email' onChange={(e)=>{SetAdmin({...admin,password:e.target.value})}} /><div className='w-fit'><span className='p-3 cursor-pointer' onClick={()=>{SetShow(!show)}}>{show?"hide":"show"}</span></div></div>
         </div>
         <Button text="Change Admin Logins" perform={handleChange}/>
     </div>

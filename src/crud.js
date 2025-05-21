@@ -39,8 +39,10 @@ const dataValidation = (key,data) => {
 }
 
 
-const submit = async (url, data,images,setLoading) => {
+const submit = async (url,type, data,images,setLoading) => {
+    
     const formData = new FormData();
+    delete data.imageDetails
     for(var key in data){
         if(!dataValidation(key,data[key])){
             return false
@@ -50,19 +52,33 @@ const submit = async (url, data,images,setLoading) => {
     if(!dataValidation("images",images)){
         return false
     }
+    
     images.forEach((fileobj) => {
+        
+        if(fileobj.file){
         formData.append('images', fileobj.file);
-        formData.append("imageDetails", JSON.stringify({ Initials: fileobj.Initials, Cost: fileobj.Cost }));
+        formData.append("imageDetails", JSON.stringify({ Initials: fileobj.Initials, Cost: fileobj.Cost}));
+        }else{
+        formData.append("previous", JSON.stringify({ Initials: fileobj.Initials, Cost: fileobj.Cost, file_url: fileobj.file_url }));
+        }
     })
     
     try {
         setLoading(true)
-        const response = await axios.post(url, formData, {
+        let response;
+        if(type=="put"){
+        response = await axios.put(url, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
-
+        }else{
+            response = await axios.post(url, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        }
         toast.success("Submitted successfully!");
         return response.data; // Return the response data to the caller
     } catch (error) {
@@ -73,7 +89,7 @@ const submit = async (url, data,images,setLoading) => {
 };
 
 const adminLogin = async (url, data) => {
-    console.log(data)
+    
     try {
         const response = await axios.post(url, data, {
             headers: {
@@ -99,14 +115,17 @@ const fetchData = async (url,set,status) => {
     }).catch((err) => {
         console.log(err)
     })
-    set(data)
+    if(data!=undefined){
+        set(data)
+    }else{
+        toast.error("Failed to find data. Try again with a valid reference number!");
+    }
     return data
 }
 
 const Edit = async (url, info) => {
     const data = await axios.put(url, info).then((res) => {
         toast.success("Submitted successfully!");
-        console.log(res.data)
         return res.data
     }).catch((err) => {
         console.log(err)
@@ -165,7 +184,6 @@ const sendEmail = async (url, data,attachments) => {
             toast.error("Failed to send email. Try again!");
 
         })
-        console.log(response)
         return response; // Return the response data to the caller
     } catch (error) {
         console.error('Error:', error);

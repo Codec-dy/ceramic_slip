@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { assets } from '../assets/assets'
 import { Context } from '../context/CeramicContext'
 
-const Row = ({file,ind,handleDelete})=>{
-    const {uploadedFiles, setUploadedFiles,setCost,user} = useContext(Context)
+const Row = ({file,ind,handleDelete,user,setCost,setUploadedFiles,uploadedFiles})=>{
+    
     const ChangeVal = (e) => {
         const { name, value } = e.target;
         // file[name] = value;
@@ -17,10 +17,20 @@ const Row = ({file,ind,handleDelete})=>{
             return newFiles;
         });
     }
+
+        function isFileUrl(url) {
+    try {
+        const parsedUrl = URL.createObjectURL(url)
+        return true;
+    } catch (error) {
+        return false;
+    }
+    }
+
     return (
     <>
     <tr className='border-b border-gray-300'>
-                <td className='p-3'><img src={URL.createObjectURL(file.file)}   alt="Item" className='w-[160px] scale-70 sm:scale-100' /></td>
+                <td className='p-3'><img src={isFileUrl(file.file)?URL.createObjectURL(file.file):file.file_url}   alt="Item" className='w-[160px] scale-70 sm:scale-100' /></td>
                 <td className='p-3 border-x-1 border-gray-300'><input type='text' onChange={ChangeVal} name='Initials' className='w-full p-1  text-sm' placeholder='Initials' value={file.Initials} required/></td>
                 <td className='p-3 border-r-1 border-gray-300'><div className='flex'><span>$</span> <input type='number' onChange={ChangeVal} className='w-[70px] p-1 text-sm' required name='Cost' placeholder='Cost' value={file.Cost}/></div></td>
                 <td className='p-3'><img src={assets.deleteIcon} onClick={handleDelete}  alt="Item" className='w-[245px] sm:w-[25px]' /></td>      
@@ -29,11 +39,10 @@ const Row = ({file,ind,handleDelete})=>{
     )
 }
 
-const Table = ({onDelete}) => {
-    const {uploadedFiles,Cost} = useContext(Context)
+const Table = ({onDelete,setCost,user,Cost,uploadedFiles,setUploadedFiles}) => {
     const files = uploadedFiles
     
-  return (
+  return files? (
     <table className='w-full border-collapse border givColor border-gray-300 p-3'>
         <tbody>
             <tr className='bg-gray-200 border-b border-gray-300'>
@@ -43,7 +52,7 @@ const Table = ({onDelete}) => {
                 <th className='text-left p-3'></th>
             </tr>
             {files.map((file, index) => (
-                <Row key={index} file={file} ind={index} handleDelete={() => onDelete(index)} />
+                <Row key={index} uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} setCost={setCost} user={user} file={file} ind={index} handleDelete={() => onDelete(index,setUploadedFiles,setCost)} />
             ))}
             <tr>
                 <td className='p-3 border-x-1 border-gray-300 font-bold' colSpan={2}>Total Cost</td>
@@ -52,7 +61,7 @@ const Table = ({onDelete}) => {
             </tr>
         </tbody>
     </table>
-  )
+  ):null
 }
 
 export default Table

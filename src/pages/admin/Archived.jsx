@@ -8,22 +8,23 @@ import { assets } from '../../assets/assets'
 
 
 const Archived = () => {
-   const [sortType, setSortType] = useState('none')
+   const [sortType, setSortType] = useState('date')
    const [from,setFrom] = useState('hl')
-    const {api} = useContext(Context)
-    const [slips,setSlips] = useState([])
+    const {api,setSlips,slips} = useContext(Context)
+    const [filter,setFilter] = useState([])
     
     
   useEffect(() => {
     document.title = 'Ceramic Slips | Admin Dashboard'
     fetchData(api+"api/getFormData",setSlips,"completed")
-   
 },[])
   
 
   useEffect(() => {
-    sortSlips(slips,setSlips,from,sortType)
-  },[sortType,from])
+    sortSlips(slips,setFilter,from,sortType)
+    console.log("here1")
+  },[slips,sortType,from])
+
 
   return (
     <AdminTemplate>
@@ -44,11 +45,11 @@ const Archived = () => {
             </select>
         </div>
        </div>
-        {slips.length==0 && <div className='flex flex-col sm:justify-center items-center h-full w-full'>
+        {filter.length==0 && <div className='flex flex-col sm:justify-center items-center h-full w-full'>
           <img src={assets.placeholder}/>
           <p className='text-gray-500 text-3xl'>No Forms to display</p>
           </div>}
-        {slips.length>0 && slips.map((slip, index) => <div key={index} ><SlipsWidget data={slip} /></div>)}
+        {filter.length>0 && filter.map((slip, index) => <div key={index} ><SlipsWidget data={slip} /></div>)}
     </div>
     </AdminTemplate>
   )
