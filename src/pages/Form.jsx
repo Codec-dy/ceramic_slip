@@ -1,21 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
-import TwoFields from '../components/TwoFields'
-import { assets } from '../assets/assets'
 import { Context } from '../context/CeramicContext'
 import Button from '../components/Button'
-import Table from '../components/Table'
 import axios from 'axios'
-import { Edit, fetchData, submit } from '../crud'
+import {fetchData, submit } from '../crud'
 import FormComp from '../components/FormComp'
-import { pre } from 'framer-motion/client'
-import { toast } from 'react-toastify'
 
 const Form = () => {
 
     const {esetUploadedFiles,euploadedFiles,setUploadedFiles,uploadedFiles,setUser,user,api,Cost,setCost,setEdit,edit,eCost,esetCost} = useContext(Context)
     const [loading, setLoading] = useState(false)
     const [formType, setFormType] = useState('submit')
-    const [form,Setform] = useState({})
     const [id,setId] = useState('')
     
     const handleFileUpload = (event,setUploadedFiles) => {

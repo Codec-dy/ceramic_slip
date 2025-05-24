@@ -108,7 +108,10 @@ const fetchData = async (url,set,status) => {
         const data = res.data
         if(status=="single"){
             return data
+        }else if(status=="all"){
+            return data
         }
+        
         const pending = data.filter((item) => item.status === "pending");
         const completed = data.filter((item) => item.status === "completed");
         return status=="pending"?pending:completed

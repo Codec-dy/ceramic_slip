@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 const TwoFields = ({type1,type2, placeholder1, placeholder2,Label1,Label2,name1,name2,value1,value2}) => {

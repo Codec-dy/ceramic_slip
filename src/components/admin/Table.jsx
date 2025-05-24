@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { assets } from '../../assets/assets'
 import { Context } from '../../context/CeramicContext';
 
 const Row = ({file,setDisplay,setAttachments})=>{

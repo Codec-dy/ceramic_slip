@@ -1,5 +1,4 @@
 import React from 'react'
-import AdminEditDelete from './AdminEditDelete'
 import { useNavigate } from 'react-router-dom'
 
 const SlipsWidget = (data) => {

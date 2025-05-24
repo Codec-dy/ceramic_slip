@@ -1,14 +1,21 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Button from '../../components/Button'
 import { useNavigate } from 'react-router-dom';
 import { adminLogin } from '../../crud';
 import { Context } from '../../context/CeramicContext';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Admin = () => {
     const [loginDetails, setLoginDetails] = useState({});
     const {api} = useContext(Context)
     const navigate = useNavigate();
+    useEffect(() => {
+        document.title = 'ArtHaus Ceramic Slip'
+        axios.post(api).then((res) => {
+            console.log(res.data)
+        })
+    },[])
     const login = async(event) => {
         event.preventDefault()
         try{

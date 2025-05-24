@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Context } from '../context/CeramicContext';
 
 const TwoFields = ({type1,type2, placeholder1, placeholder2,Label1,Label2,name1,name2,user,setUser}) => {
 

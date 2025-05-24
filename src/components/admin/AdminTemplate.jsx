@@ -17,7 +17,7 @@ const AdminTemplate = (props) => {
       <img onClick={handleMenuClick} src={assets.menu} className='w-[30px] m-3 sm:hidden'/>
     <div className='flex flex-row gap-3 w-screen h-screen overflow-hidden bg-gray-100'>
         <Sidebar toggle={menuOpen}/>
-        {props.children}
+        <div className='overflow-y-scroll w-full'>{props.children}</div>
         
     </div>
     </div>

@@ -22,7 +22,6 @@ const Archived = () => {
 
   useEffect(() => {
     sortSlips(slips,setFilter,from,sortType)
-    console.log("here1")
   },[slips,sortType,from])
 
 

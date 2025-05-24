@@ -1,12 +1,10 @@
 import React, { useContext, useEffect } from 'react'
 import { assets } from '../assets/assets'
-import { Context } from '../context/CeramicContext'
 
 const Row = ({file,ind,handleDelete,user,setCost,setUploadedFiles,uploadedFiles})=>{
     
     const ChangeVal = (e) => {
         const { name, value } = e.target;
-        // file[name] = value;
         setUploadedFiles((prevFiles) => {
             const newFiles = [...prevFiles];
             newFiles[ind][name] = value;
