@@ -87,6 +87,7 @@ const Form = () => {
        
     },[])
   return (
+
     <div className='flex flex-col bg-gray-100 p-3 gap-4  w-full'>
     <div className='flex flex-row'>
         <div onClick={()=>setFormType("submit")} className={`flex-1 text-center border-1 ${formType=="submit"?"bg-gray-300":''} border-gray-200 p-4 cursor-pointer`}>Submit Form</div>
