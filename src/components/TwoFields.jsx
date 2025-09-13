@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Context } from '../context/CeramicContext';
 
-const TwoFields = ({type1,type2, placeholder1, placeholder2,Label1,Label2,name1,name2}) => {
+const TwoFields = ({type1,type2, placeholder1, placeholder2,Label1,Label2,name1,name2,user,setUser}) => {
 
     const [today, setToday] = useState('');
-    const {user, setUser} = useContext(Context)
+    
   
     useEffect(() => {
       const currentDate = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
       setToday(currentDate);
+      
+      if(!user.date){
       setUser({...user,date:currentDate})
+      }
+      
     }, []);
 
     const handleChange = (e,name) => {
@@ -34,13 +37,13 @@ const TwoFields = ({type1,type2, placeholder1, placeholder2,Label1,Label2,name1,
                 <label className="block text-gray-700 text-sm font-bold mb-2" >
                    {Label1}
                 </label>
-                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type={type1} placeholder={placeholder1} required onChange={(e)=>handleChange(e,name1)} value={user[name1]}/>
+                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type={type1} placeholder={placeholder1} required onChange={(e)=>handleChange(e,name1,)} value={user[name1]}/>
             </div>
             {(Label2 && <div className="mb-4 w-full">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                 {Label2}
                 </label>
-                {type2=="date" && <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type={type2} value={today} placeholder={placeholder2} readOnly required />}
+                {type2=="date" && <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type={type2} value={user[name2]?user[name2]:today} placeholder={placeholder2} readOnly required />}
                 {type2!="date" && <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type={type2} onChange={(e)=>handleChange(e,name2)} value={user[name2]}  placeholder={placeholder2} required />}
                 
             </div>)}

@@ -39,8 +39,10 @@ const dataValidation = (key,data) => {
 }
 
 
-const submit = async (url, data,images,setLoading) => {
+const submit = async (url,type, data,images,setLoading) => {
+    
     const formData = new FormData();
+    delete data.imageDetails
     for(var key in data){
         if(!dataValidation(key,data[key])){
             return false
@@ -50,19 +52,33 @@ const submit = async (url, data,images,setLoading) => {
     if(!dataValidation("images",images)){
         return false
     }
+    
     images.forEach((fileobj) => {
+        
+        if(fileobj.file){
         formData.append('images', fileobj.file);
-        formData.append("imageDetails", JSON.stringify({ Initials: fileobj.Initials, Cost: fileobj.Cost }));
+        formData.append("imageDetails", JSON.stringify({ Initials: fileobj.Initials, Cost: fileobj.Cost}));
+        }else{
+        formData.append("previous", JSON.stringify({ Initials: fileobj.Initials, Cost: fileobj.Cost, file_url: fileobj.file_url }));
+        }
     })
     
     try {
         setLoading(true)
-        const response = await axios.post(url, formData, {
+        let response;
+        if(type=="put"){
+        response = await axios.put(url, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
-
+        }else{
+            response = await axios.post(url, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        }
         toast.success("Submitted successfully!");
         return response.data; // Return the response data to the caller
     } catch (error) {
@@ -73,7 +89,7 @@ const submit = async (url, data,images,setLoading) => {
 };
 
 const adminLogin = async (url, data) => {
-    console.log(data)
+    
     try {
         const response = await axios.post(url, data, {
             headers: {
@@ -87,21 +103,32 @@ const adminLogin = async (url, data) => {
     }
 };
 
-const fetchData = async (url,set) => {
+const fetchData = async (url,set,status) => {
     const data = await axios.get(url).then((res) => {
+        const data = res.data
+        if(status=="single"){
+            return data
+        }else if(status=="all"){
+            return data
+        }
         
-        return res.data
+        const pending = data.filter((item) => item.status === "pending");
+        const completed = data.filter((item) => item.status === "completed");
+        return status=="pending"?pending:completed
     }).catch((err) => {
         console.log(err)
     })
-    set(data)
+    if(data!=undefined){
+        set(data)
+    }else{
+        toast.error("Failed to find data. Try again with a valid reference number!");
+    }
     return data
 }
 
 const Edit = async (url, info) => {
     const data = await axios.put(url, info).then((res) => {
         toast.success("Submitted successfully!");
-        console.log(res.data)
         return res.data
     }).catch((err) => {
         console.log(err)
@@ -134,6 +161,17 @@ const handleDelete = async (url) => {
     }
 }
 
+const handleCompleted = async (url) => {
+    try {
+        const response = await axios.put(url);
+        toast.success("Successfully completed!");
+        return response.data; // Return the response data to the caller
+    } catch (error) {
+        console.error('Error:', error);
+        return false; // Return false to indicate failure
+    }
+}
+
 const sendEmail = async (url, data,attachments) => {
     try {
         data.attachments = attachments
@@ -149,7 +187,6 @@ const sendEmail = async (url, data,attachments) => {
             toast.error("Failed to send email. Try again!");
 
         })
-        console.log(response)
         return response; // Return the response data to the caller
     } catch (error) {
         console.error('Error:', error);
@@ -157,5 +194,44 @@ const sendEmail = async (url, data,attachments) => {
     }
 };
 
+const sortSlips = (slips,setSlips,from,sortType)=>{
+    let slipsCopy = slips.slice();
+    switch (from) {
+      case 'lh':
+        if(sortType=='name'){
+          slipsCopy.sort((item1,item2)=>item1.name.localeCompare(item2.name))
+          setSlips(slipsCopy)
+        }
+        else if(sortType=='date'){
+          slipsCopy.sort((item1,item2)=>new Date(item1.date)-new Date(item2.date))
+          setSlips(slipsCopy)
+        }else if(sortType=='price'){
+          slipsCopy.sort((item1,item2)=>item1.totalCost-item2.totalCost)
+          setSlips(slipsCopy)
+        }
+        break;
+      case 'hl':
+        if(sortType=='name'){
+          slipsCopy.sort((item1,item2)=>item2.name.localeCompare(item1.name))
+          setSlips(slipsCopy)
 
-export {submit,adminLogin,fetchData,handleDelete,Edit,changeUser,sendEmail}
+        }
+        else if(sortType=='date'){
+          slipsCopy.sort((item1,item2)=>new Date(item2.date)-new Date(item1.date))
+          setSlips(slipsCopy)
+
+        }else if(sortType=='price'){
+          slipsCopy.sort((item1,item2)=>item2.totalCost-item1.totalCost)
+          setSlips(slipsCopy)
+
+        }      
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+
+export {submit,adminLogin,fetchData,handleDelete,Edit,changeUser,sendEmail,sortSlips,handleCompleted}

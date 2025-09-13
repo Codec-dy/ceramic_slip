@@ -14,11 +14,11 @@ const AdminFormPreview = () => {
     const [adminDate,SetAdminDate] = useState({})
     const nav = useNavigate();
     const { id } = useParams();
-    const {api } = useContext(Context)
+    const {api,shippingCost } = useContext(Context)
     useEffect(() => {
         document.title = 'Admin Dashboard | Ceramic Slips'
         if(id){
-        fetchData(api+"api/getFormData?id="+id,Setform)
+        fetchData(api+"api/getFormData?id="+id,Setform,"single")
         }
     },[])
     useEffect(() => {
@@ -29,7 +29,7 @@ const AdminFormPreview = () => {
         const retVal = await Edit(api+"api/edit?id="+id,adminDate)
     }
     const handleClick = () => {
-        nav('/admin/dashboard/slips')
+        nav(-1)
     }
     
     return (
@@ -47,14 +47,21 @@ const AdminFormPreview = () => {
                     <TwoFields Label1="State" type1="text" name1="state"  placeholder1="Enter State" Label2="Zip code" type2="text" name2="zipCode" placeholder2="Enter zip code" value1={form.state} value2={form.zipCode} />
                 </>}
                  <div className="mb-4 w-full flex gap-5 flex-row items-center content-center">
+                <TwoFields Label1="Address" type1="text" name1="address"  placeholder1="Enter your address"  value1={form.address} />
+                 <div className="mb-4 w-full flex gap-5 flex-row items-start content-center">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Need Shipping
+                    Need Shipping ({shippingCost} a box)
                     </label>
+                    <div className='flex flex-col gap-2'>
                     <div className='flex flex-row gap-2'>
                         <input type="radio" className="scale-150" name='shipping' value="yes" checked={form.shipping === 'yes'} disabled/>
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Yes
                         </label>
+                    </div>
+                    {form.shipping === 'yes' && <div className='flex flex-row gap-2'>
+                        <input type="number" min="0" disabled value={form.boxs}  placeholder="Enter number"  className="shadow appearance-none border rounded w-[140px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                       </div> }
                     </div>
                     <div className='flex flex-row gap-2'>
                         <input type="radio" className="scale-150" name='shipping' value="no" checked={form.shipping === 'no'} disabled/>
@@ -81,7 +88,7 @@ const AdminFormPreview = () => {
             </div>
         </div>
         </div>
-   
+   </div>
       )
     
 }
