@@ -7,11 +7,14 @@ import { handleCompleted, handleDelete } from '../../crud';
 const AdminEditDelete = ({id}) => {
   const {api,setSlips} = useContext(Context)
   const delet = async () => {
+    let promptCheck = confirm("Are you sure you want to delete this slip? This action cannot be undone.")
+    if(promptCheck){
     const retVal = await handleDelete(api+"api/deleteFormData?id="+id)
     setSlips(retVal)
    setTimeout(() => {
       window.location.reload()
     }, 1500);
+  }
   }
   const completed = async () => {
     const retVal = await handleCompleted(api+"api/completed?id="+id)
