@@ -6,7 +6,6 @@ import { Context } from '../../context/CeramicContext'
 
 const Settings = () => {
   const [admin,SetAdmin] = React.useState({})
-  const [code,SetCode] = React.useState({})
   const [user,SetUser] = React.useState({})
   const [show,SetShow] = React.useState(false)
   const {api} = useContext(Context)
@@ -20,10 +19,7 @@ const Settings = () => {
     e.preventDefault()
     const retVal = changeUser(`${api}api/adminChange`,admin)
   }
-  const handleChange2 = (e) => {
-    e.preventDefault()
-    const retVal = changeUser(`${api}api/adminChange`,code)
-  }
+  
   return (
     <AdminTemplate>
       <div className='flex flex-col gap-5 overflow-y-auto w-full p-4'>
@@ -39,16 +35,7 @@ const Settings = () => {
         </div>
         <Button text="Change Admin Logins" perform={handleChange}/>
     </div>
-    <div className='flex flex-col gap-5 w-full p-4'>
-        <h1 className='text-2xl font-semibold text-left'>Change Code for submitting form</h1>
-        <div className='flex flex-row gap-2'><label>Current Code:</label><span>{user.code}</span></div>
-        <div className='flex flex-col gap-1  items-baseline'>
-          <label className='text-gray-700 text-xl font-bold mb-2'>New Code</label>
-          <input type="text" className='border border-gray-300 rounded-md p-2 w-full' placeholder='Enter new code' onChange={(e)=>{SetCode({...code,code:e.target.value})}} />
-        </div>
-        <Button text="Change Code" perform={handleChange2} />
     
-    </div>
     </div>
 
     </AdminTemplate>

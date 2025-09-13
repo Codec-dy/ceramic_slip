@@ -46,8 +46,7 @@ const AdminFormPreview = () => {
                     <TwoFields Label1="Street" type1="text" name1="street"  placeholder1="Enter Street" Label2={"City"} name2={"city"} placeholder2={"Enty City"} value1={form.street} value2={form.city}/>
                     <TwoFields Label1="State" type1="text" name1="state"  placeholder1="Enter State" Label2="Zip code" type2="text" name2="zipCode" placeholder2="Enter zip code" value1={form.state} value2={form.zipCode} />
                 </>}
-                 <div className="mb-4 w-full flex gap-5 flex-row items-center content-center">
-                <TwoFields Label1="Address" type1="text" name1="address"  placeholder1="Enter your address"  value1={form.address} />
+                
                  <div className="mb-4 w-full flex gap-5 flex-row items-start content-center">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
                     Need Shipping ({shippingCost} a box)
@@ -88,7 +87,6 @@ const AdminFormPreview = () => {
             </div>
         </div>
         </div>
-   </div>
       )
     
 }
