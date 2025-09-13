@@ -11,9 +11,6 @@ const AdminEditDelete = ({id}) => {
     if(promptCheck){
     const retVal = await handleDelete(api+"api/deleteFormData?id="+id)
     setSlips(retVal)
-   setTimeout(() => {
-      window.location.reload()
-    }, 1500);
   }
   }
   const completed = async () => {

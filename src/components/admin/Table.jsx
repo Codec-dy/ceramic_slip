@@ -18,7 +18,7 @@ const Row = ({file,setDisplay,setAttachments})=>{
     <tr className='border-b border-gray-300'>
                 <td className='p-3'><img src={file.file_url} onClick={()=>(setDisplay(file.file_url))}  alt="Item" className='w-[160px] scale-70 sm:scale-100' /></td>
                 <td className='p-3 border-x-1 border-gray-300'><input type='text' name='Initials' className='w-full p-1  text-sm' placeholder='Initials' value={file.Initials} readOnly required/></td>
-                <td className='p-3 border-r-1 border-gray-300'><div className='flex'><span>$</span> <input type='number' className='w-[70px] p-1 text-sm' required name='Cost' placeholder='Cost'readOnly  value={file.Cost}/></div></td>
+                <td className='p-3 border-r-1 border-gray-300'><div className='flex'><span>$</span> <input type='number' className='w-[70px] p-1 text-sm' required name='Cost' min={0} placeholder='Cost'readOnly  value={file.Cost}/></div></td>
                 <th className='text-left p-3'><input type='checkbox' onChange={handleChecks}/></th>
                
      </tr>

@@ -42,8 +42,8 @@ const Form = () => {
         }
 
        if(retVal){
-        setUser({name:'',email:'',phone:'',address:'',shipping:'',shippingCost:0,date:user.date, totalCost:0,Code:''})
-        setEdit({name:'',email:'',phone:'',address:'',shipping:'',shippingCost:0,date:'', totalCost:0,Code:''})
+        setUser({name:'',email:'',phone:'',state:'',city:'',zipCode:'',street:'', shipping:'',shippingCost:0,date:user.date, totalCost:0,Code:''})
+        setEdit({name:'',email:'',phone:'',state:'',city:'',zipCode:'',street:'',shipping:'',shippingCost:0,date:'', totalCost:0,Code:''})
         setUploadedFiles([])
         setCost(0)
        }else{
@@ -91,7 +91,7 @@ const Form = () => {
 
     <div className='flex flex-col bg-gray-100 p-3 gap-4  w-full'>
     <div className='flex flex-row'>
-        
+
         <div onClick={()=>setFormType("submit")} className={`flex-1 text-center border-1 ${formType=="submit"?"bg-gray-300":''} border-gray-200 p-4 cursor-pointer`}>Submit Form</div>
         <div onClick={()=>setFormType("retrieve")} className={`flex-1 text-center border-1 border-gray-200 p-4 cursor-pointer ${formType=="retrieve"?"bg-gray-300":''}` }>Retrieve Form</div>
     </div>

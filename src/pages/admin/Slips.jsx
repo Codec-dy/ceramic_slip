@@ -32,8 +32,8 @@ const Slips = () => {
         slip.name && slip.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    setFilter(filtered.reverse());
-  }, [slips, sortType, from, searchTerm]);
+    sortSlips(filtered, setFilter,from,sortType);
+  }, [slips,sortType, from, searchTerm]);
 
   // Pagination logic
   const totalPages = Math.ceil(filter.length / slipsPerPage);
@@ -44,9 +44,9 @@ const Slips = () => {
   const scrollToTop = () => {
     const topElem = document.getElementById('top');
     if (topElem) {
-      topElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      topElem.scrollIntoView({ behavior: 'instant', block: 'start' });
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
   };
   const handlePrev = () => {

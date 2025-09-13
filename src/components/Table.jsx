@@ -7,10 +7,12 @@ const Row = ({file,ind,handleDelete,user,setCost,setUploadedFiles,uploadedFiles}
         const { name, value } = e.target;
         setUploadedFiles((prevFiles) => {
             const newFiles = [...prevFiles];
-            newFiles[ind][name] = value;
             if (name === 'Cost') {
+                newFiles[ind][name] =  value>=0 ? value : 0;
                 const totalCost = uploadedFiles.reduce((acc, file) => acc + parseFloat(file.Cost || 0), 0);
                 setCost(totalCost+user.shippingCost);
+            }else{
+                newFiles[ind][name] = value;
             }
             return newFiles;
         });
@@ -30,7 +32,7 @@ const Row = ({file,ind,handleDelete,user,setCost,setUploadedFiles,uploadedFiles}
     <tr className='border-b border-gray-300'>
                 <td className='p-3'><img src={isFileUrl(file.file)?URL.createObjectURL(file.file):file.file_url}   alt="Item" className='w-[160px] scale-70 sm:scale-100' /></td>
                 <td className='p-3 border-x-1 border-gray-300'><input type='text' onChange={ChangeVal} name='Initials' className='w-full p-1  text-sm' placeholder='Initials' value={file.Initials} required/></td>
-                <td className='p-3 border-r-1 border-gray-300'><div className='flex'><span>$</span> <input type='number' onChange={ChangeVal} className='w-[70px] p-1 text-sm' required name='Cost' placeholder='Cost' value={file.Cost}/></div></td>
+                <td className='p-3 border-r-1 border-gray-300'><div className='flex'><span>$</span> <input type='number' onChange={ChangeVal} className='w-[70px] p-1 text-sm' required name='Cost' min={0} placeholder='Cost' value={file.Cost}/></div></td>
                 <td className='p-3'><img src={assets.deleteIcon} onClick={handleDelete}  alt="Item" className='w-[245px] sm:w-[25px]' /></td>      
      </tr>
         </>

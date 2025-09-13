@@ -18,11 +18,6 @@ const dataValidation = (key,data) => {
             toast.error("Phone number should have 10 digits")
             return false
         }
-    }else if(key=="address"){
-        if(data.length < 10){
-            toast.error("Address should be more than 10 characters")
-            return false
-        }
     }
     else if(key=="shipping"){
         if(data.length < 1){
@@ -32,6 +27,26 @@ const dataValidation = (key,data) => {
     }else if(key=="images"){
         if(data.length < 1){
             toast.error("Please upload images")
+            return false
+        }
+    }else if(key=="state"){
+        if(data.length < 2){
+            toast.error("State should be more than 2 characters")
+            return false
+        }
+    }else if(key=="street"){
+        if(data.length < 3){
+            toast.error("Street should be more than 3 characters")
+            return false
+        }
+    }else if(key=="city"){
+        if(data.length < 2){
+            toast.error("City should be more than 2 characters")
+            return false
+        }
+    }else if(key=="zipCode"){
+        if(data.length !== 5){
+            toast.error("Zip code should be valid")
             return false
         }
     }
@@ -112,7 +127,7 @@ const fetchData = async (url,set,status) => {
             return data
         }
         
-        const pending = data.filter((item) => item.status === "pending");
+        const pending = data.filter((item) => item.status === "pending").reverse();
         const completed = data.filter((item) => item.status === "completed");
         return status=="pending"?pending:completed
     }).catch((err) => {
