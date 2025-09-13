@@ -62,12 +62,12 @@ const Form = () => {
         <form>
         {loading && 
           
-             <div className="loader ">
-            <p>Making sure</p></div>
+             <div className="loader "></div>
             }
         {!loading && ( <> <TwoFields Label1="Full Name" Label2="Date" type1="text" type2="date" placeholder1="Enter your full name" name1="name" name2="date" placeholder2="Enter Date"/>
             <TwoFields Label2="Email" Label1="Phone" type2="email" type1="Enter phone number" placeholder2="Enter Your Email" name1="phone" name2="email" placeholder1="Enter Your Phone Number"/>
-            <TwoFields Label1="Address" type1="text" name1="address"  placeholder1="Enter your address" />
+            <TwoFields Label1="Street" type1="text" name1="street"  placeholder1="Enter Street" Label2={"City"} name2={"city"} placeholder2={"Enty City"}/>
+            <TwoFields Label1="State" type1="text" name1="state"  placeholder1="Enter State" Label2="Zip code" type2="text" name2="zipCode" placeholder2="Enter zip code" />
             <div className="mb-4 w-full flex gap-5 flex-row items-center content-center">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                     Need Shipping ({shippingCost} a box)
@@ -97,8 +97,7 @@ const Form = () => {
             <h3 className='font-bold givColor'>Ceramics are considered abandoned if not picked up 30 days after being contacted</h3>
             
             <Table onDelete={handleDelete}/>
-            <div className=' mt-6 max-w-[300px]'><TwoFields Label1="Code" type1="text" name1="Code"  placeholder1="Enter code to submit" /></div>
-            <div className='w-full'><Button text="Submit" perform={handleSubmit}/></div>
+            <div className='w-full mt-10'><Button text="Submit" perform={handleSubmit}/></div>
         </>
         )}    
         </form>
