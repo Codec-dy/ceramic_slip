@@ -55,14 +55,15 @@ const Form = () => {
        
     },[])
   return (
+
     <div className='flex flex-col bg-gray-100 p-3 gap-4  w-full'>
      <div className='flex flex-col items-center bg-gray-100 p-3 gap-7 max-w-[640px] w-full min-h-screen'>
         <h1 className="text-3xl sm:text-6xl givColor font-bold underline">ArtHaus Ceramic Slip</h1>
         <form>
         {loading && 
           
-             <div className="loader "></div> 
-           
+             <div className="loader ">
+            <p>Making sure</p></div>
             }
         {!loading && ( <> <TwoFields Label1="Full Name" Label2="Date" type1="text" type2="date" placeholder1="Enter your full name" name1="name" name2="date" placeholder2="Enter Date"/>
             <TwoFields Label2="Email" Label1="Phone" type2="email" type1="Enter phone number" placeholder2="Enter Your Email" name1="phone" name2="email" placeholder1="Enter Your Phone Number"/>
