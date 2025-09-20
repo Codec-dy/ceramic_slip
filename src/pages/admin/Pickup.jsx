@@ -8,7 +8,7 @@ import { assets } from '../../assets/assets'
 import SearchIcon from '../../assets/SearchIcon'
 
 
-const Slips = () => {
+const Pickup = () => {
    const [sortType, setSortType] = useState('date')
    const [from,setFrom] = useState('hl')
   const {api,setSlips,slips} = useContext(Context)
@@ -21,7 +21,7 @@ const Slips = () => {
     
   useEffect(() => {
     document.title = 'Ceramic Slips | Admin Dashboard'
-    fetchData(api+"api/getFormData",setSlips,"pending")
+    fetchData(api+"api/getFormData",setSlips,"contacted")
 },[])
   
 
@@ -36,8 +36,8 @@ const Slips = () => {
   }, [sortType, from, searchTerm]);
 
   useEffect(() => {
-    setFilter(slips);
-    }, [slips]);
+      setFilter(slips);
+      }, [slips]);
   // Pagination logic
   const totalPages = Math.ceil(filter.length / slipsPerPage);
   const startIdx = (currentPage - 1) * slipsPerPage;
@@ -160,4 +160,4 @@ const Slips = () => {
   )
 }
 
-export default Slips
+export default Pickup

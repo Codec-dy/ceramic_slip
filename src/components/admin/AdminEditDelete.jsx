@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import Button from '../Button'
 import { Context } from '../../context/CeramicContext';
-import { handleCompleted, handleDelete } from '../../crud';
+import { handleCompleted, handleContacted, handleDelete } from '../../crud';
 
 
 const AdminEditDelete = ({id}) => {
@@ -20,12 +20,20 @@ const AdminEditDelete = ({id}) => {
       window.location.reload()
     }, 1500);
   }
+  const contacted = async () => {
+    const retVal = await handleContacted(api+"api/contacted?id="+id)
+    setSlips(retVal)
+    setTimeout(() => {
+      window.location.reload()
+    }, 1500);
+  }
   return (
     <div className='flex flex-col sm:flex-row gap-4'>
         {/* <div className={isEditing==true?'block':'hidden'} onClick={()=>{handleEdit(api,editable,model),setEditable(false),setIsEditing(false),setRefresh('edit')}}><Button  text={"Done"}/></div>
         <div className={isEditing==true?'hidden':'block'} onClick={()=>{edit(id),setIsEditing(true)}}><Button  text={"Edit"}/></div> */}
         <div><Button perform={delet}  text={"Delete"}/></div>
-        <div><Button perform={completed}  text={"Completed"}/></div>
+        <div><Button perform={contacted}  text={"Contacted"}/></div>
+        <div><Button perform={completed}  text={"Archive"}/></div>
     </div>
   )
 }

@@ -19,6 +19,7 @@ const Sidebar = ({toggle}) => {
         <h1 onClick={()=>{nav('/admin/dashboard/')}} className='text-2xl font-semibold text-left cursor-pointer'>Admin Dashboard</h1>
         <div className='flex flex-col gap-4'>
             <Link to={'/admin/dashboard/slips'} className='text-lg font-semibold'>Ceramic Slips</Link>
+            <Link to={'/admin/dashboard/pickup'} className='text-lg font-semibold'>Ready for Pickup</Link>
             <Link to={'/admin/dashboard/completedslips'} className='text-lg font-semibold'>Archived Slips</Link>
             <Link to={'/admin/dashboard/settings'} className='text-lg font-semibold'>Settings</Link>
             <div><Link onClick={()=>{sessionStorage.setItem("adminToken",false) }} to={'/admin/wp-admin'} className='text-lg font-semibold'>Logout</Link></div>

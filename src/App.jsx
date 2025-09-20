@@ -11,6 +11,7 @@ import Settings from './pages/admin/Settings.jsx'
 import AdminFormPreview from './pages/admin/AdminFormPreview.jsx'
 import ProtectedRoute from './pages/admin/ProtectedRoute.jsx'
 import Archived from './pages/admin/Archived.jsx'
+import Pickup from './pages/admin/Pickup.jsx'
 function App() {
 
   return (
@@ -39,6 +40,14 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <Slips />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/dashboard/pickup"
+                    element={
+                        <ProtectedRoute>
+                            <Pickup />
                         </ProtectedRoute>
                     }
                 />
