@@ -83,7 +83,7 @@ const AdminFormPreview = () => {
                     <label className='w-fit font-semibold'>Date Contacted</label>
                     <input type="date" className='border border-gray-400 p-2  border-t-0 border-x-0' name='dateContacted' onChange={(e)=>SetAdminDate({dateContacted:e.target.value})} value={adminDate.dateContacted}/>
                 </div>
-                <div className='w-full mt-6'><Button text="Submit" perform={handleEdit}/></div>
+                <div className='w-full mt-6'><Button text="Contacted" perform={handleEdit}/></div>
             </div>
         </div>
         </div>

@@ -32,8 +32,12 @@ const Archived = () => {
         slip.name && slip.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    setFilter(filtered.reverse());
-  }, [slips, sortType, from, searchTerm]);
+    sortSlips(filtered, setFilter,from,sortType);
+  }, [sortType, from, searchTerm]);
+
+  useEffect(() => {
+      setFilter(slips);
+      }, [slips]);
 
   // Pagination logic
   const totalPages = Math.ceil(filter.length / slipsPerPage);

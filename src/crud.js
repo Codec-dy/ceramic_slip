@@ -128,8 +128,11 @@ const fetchData = async (url,set,status) => {
         }
         
         const pending = data.filter((item) => item.status === "pending").reverse();
-        const completed = data.filter((item) => item.status === "completed");
-        return status=="pending"?pending:completed
+        const completed = data.filter((item) => item.status === "completed").reverse();
+        const contacted = data.filter((item) => item.status === "contacted").reverse();
+        if(status=="contacted") return contacted
+        else if(status=="completed") return completed
+        else return pending
     }).catch((err) => {
         console.log(err)
     })
@@ -186,6 +189,16 @@ const handleCompleted = async (url) => {
         return false; // Return false to indicate failure
     }
 }
+const handleContacted = async (url) => {
+    try {
+        const response = await axios.put(url);
+        toast.success("Contacted successfully!");
+        return response.data; // Return the response data to the caller
+    } catch (error) {
+        console.error('Error:', error);
+        return false; // Return false to indicate failure
+    }
+}
 
 const sendEmail = async (url, data,attachments) => {
     try {
@@ -210,43 +223,51 @@ const sendEmail = async (url, data,attachments) => {
 };
 
 const sortSlips = (slips,setSlips,from,sortType)=>{
-    let slipsCopy = slips.slice();
-    switch (from) {
-      case 'lh':
-        if(sortType=='name'){
-          slipsCopy.sort((item1,item2)=>item1.name.localeCompare(item2.name))
-          setSlips(slipsCopy)
+        // If neither from nor sortType provided, do nothing
+        if((from === undefined || from === null || from === '') && (sortType === undefined || sortType === null || sortType === '')){
+                return
         }
-        else if(sortType=='date'){
-          slipsCopy.sort((item1,item2)=>new Date(item1.date)-new Date(item2.date))
-          setSlips(slipsCopy)
-        }else if(sortType=='price'){
-          slipsCopy.sort((item1,item2)=>item1.totalCost-item2.totalCost)
-          setSlips(slipsCopy)
+
+        // Provide sensible defaults when only one parameter is provided
+        const order = (from && from !== '') ? from : 'lh' // default to low->high
+        const field = (sortType && sortType !== '') ? sortType : 'date' // default to date
+
+        let slipsCopy = slips.slice();
+        switch (order) {
+            case 'lh':
+                if(field=='name'){
+                    slipsCopy.sort((item1,item2)=>item1.name.localeCompare(item2.name))
+                    setSlips(slipsCopy)
+                }
+                else if(field=='date'){
+                    slipsCopy.sort((item1,item2)=>new Date(item1.date)-new Date(item2.date))
+                    setSlips(slipsCopy)
+                }else if(field=='price'){
+                    slipsCopy.sort((item1,item2)=>item1.totalCost-item2.totalCost)
+                    setSlips(slipsCopy)
+                }
+                break;
+            case 'hl':
+                if(field=='name'){
+                    slipsCopy.sort((item1,item2)=>item2.name.localeCompare(item1.name))
+                    setSlips(slipsCopy)
+
+                }
+                else if(field=='date'){
+                    slipsCopy.sort((item1,item2)=>new Date(item2.date)-new Date(item1.date))
+                    setSlips(slipsCopy)
+
+                }else if(field=='price'){
+                    slipsCopy.sort((item1,item2)=>item2.totalCost-item1.totalCost)
+                    setSlips(slipsCopy)
+
+                }      
+                break;
+            default:
+                break;
         }
-        break;
-      case 'hl':
-        if(sortType=='name'){
-          slipsCopy.sort((item1,item2)=>item2.name.localeCompare(item1.name))
-          setSlips(slipsCopy)
-
-        }
-        else if(sortType=='date'){
-          slipsCopy.sort((item1,item2)=>new Date(item2.date)-new Date(item1.date))
-          setSlips(slipsCopy)
-
-        }else if(sortType=='price'){
-          slipsCopy.sort((item1,item2)=>item2.totalCost-item1.totalCost)
-          setSlips(slipsCopy)
-
-        }      
-        break;
-
-      default:
-        break;
     }
-  }
 
 
 
-export {submit,adminLogin,fetchData,handleDelete,Edit,changeUser,sendEmail,sortSlips,handleCompleted}
+export {submit,adminLogin,fetchData,handleDelete,Edit,changeUser,sendEmail,sortSlips,handleCompleted,handleContacted}

@@ -16,7 +16,7 @@ const CeramicContext = (props) => {
      const [slips, setSlips] = React.useState([])
     const api = 'https://ceramicslip-backend.onrender.com/';
     // const api = 'http://localhost:5000/';
-    const [edit,setEdit] = useState({name:'', email:'', phone:'', state:'', street:'',city:'', date:'',"zipCode":'',shipping:'',shippingCost:0, totalCost:0,boxs:0});
+    const [edit,setEdit] = useState({name:'', email:'', phone:'', state:'', street:'',city:'', date:'', "zipCode":'',shipping:'',shippingCost:0, totalCost:0,boxs:0});
     const [adminAttachments, setAdminAttachments] = useState([])
     const value = {euploadedFiles,esetUploadedFiles,eCost,esetCost,shippingCost, setShippingCost,uploadedFiles, setUploadedFiles, user, setUser, refresh, setRefresh, api, Cost, setCost,slips,setSlips,adminAttachments,setAdminAttachments,edit,setEdit}
   return (
