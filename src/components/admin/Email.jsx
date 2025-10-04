@@ -7,7 +7,7 @@ import { useContext } from 'react';
 const Email = ({ onSubmit,to }) => {
   const [emailData, setEmailData] = useState({
     to: '',
-    subject: 'Your Ceramic Slip Has Been Successfully Completed',
+    subject: 'Ceramic is Ready For Pickup',
     message: 'Hi! \nThis is ArtHaus. Your ceramic(s) has been fired and is ready for pick up at ArtHaus on Washington and Broadway. We are open Monday - Saturday 10am - 6pm. Please tell those at the front desk which items you are picking up. \n\nThank you for your patience and we look forward to seeing you soon!\n\nBest,\nArtHaus Team',
   });
   const { api, adminAttachments,setAdminAttachments, } = useContext(Context);
