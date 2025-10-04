@@ -4,7 +4,7 @@ import { Context } from '../../context/CeramicContext';
 import { handleCompleted, handleContacted, handleDelete } from '../../crud';
 
 
-const AdminEditDelete = ({id}) => {
+const AdminEditDelete = ({id,page=''}) => {
   const {api,setSlips} = useContext(Context)
   const delet = async () => {
     let promptCheck = confirm("Are you sure you want to delete this slip? This action cannot be undone.")
@@ -32,7 +32,7 @@ const AdminEditDelete = ({id}) => {
         {/* <div className={isEditing==true?'block':'hidden'} onClick={()=>{handleEdit(api,editable,model),setEditable(false),setIsEditing(false),setRefresh('edit')}}><Button  text={"Done"}/></div>
         <div className={isEditing==true?'hidden':'block'} onClick={()=>{edit(id),setIsEditing(true)}}><Button  text={"Edit"}/></div> */}
         <div><Button perform={delet}  text={"Delete"}/></div>
-        <div><Button perform={contacted}  text={"Contacted"}/></div>
+        {page!="pickup" && <div><Button perform={contacted}  text={"Contacted"}/></div>}
         <div><Button perform={completed}  text={"Archive"}/></div>
     </div>
   )

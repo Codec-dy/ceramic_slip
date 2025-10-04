@@ -135,7 +135,7 @@ const Pickup = () => {
             {currentSlips.map((slip, index) => (
               <div key={index}>
                 <SlipsWidget data={slip} />
-                <AdminEditDelete id={slip._id} />
+                <AdminEditDelete id={slip._id} page='pickup' />
               </div>
             ))}
             <div className='flex flex-row justify-center items-center gap-4 mt-4'>

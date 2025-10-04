@@ -5,6 +5,7 @@ import axios from 'axios'
 import {fetchData, submit } from '../crud'
 import TwoFields from '../components/admin/TwoFields'
 import FormComp from '../components/FormComp'
+import imageCompression from 'browser-image-compression';
 
 const Form = () => {
 
@@ -13,10 +14,25 @@ const Form = () => {
     const [formType, setFormType] = useState('submit')
     const [id,setId] = useState('')
     
-    const handleFileUpload = (event,setUploadedFiles) => {
+    const handleFileUpload = async (event,setUploadedFiles) => {
         const file = event.target.files[0]
         if (file) {
-            setUploadedFiles((prevFiles) => [...prevFiles, {file: file, Initials:'', Cost:''}])
+              // Compression options
+                const options = {
+                    maxSizeMB: 0.2,          // Target max size in MB (0.2 MB = ~200KB)
+                    maxWidthOrHeight: 1024,  // Resize dimensions if larger
+                    useWebWorker: true,
+                };
+                  try {
+                        const compressedFile = await imageCompression(file, options);
+                        // console.log("Original size:", (file.size / 1024).toFixed(2), "KB");
+                        // console.log("Compressed size:", (compressedFile.size / 1024).toFixed(2), "KB");
+                        setUploadedFiles((prevFiles) => [...prevFiles, {file: compressedFile, Initials:'', Cost:''}])
+
+                  }catch(e){
+                        console.log(e)
+                  }
+
         }
     }
 
