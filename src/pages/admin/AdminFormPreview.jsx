@@ -35,7 +35,10 @@ const AdminFormPreview = () => {
     return (
         
         <div className='flex flex-col bg-gray-100 p-3 gap-4  w-full overflow-y-auto'>
-            <h1 onClick={handleClick} className='text-red-600 font-extrabold text-3xl cursor-pointer'>X</h1>
+            <div className='flex justify-between items-center w-full'>
+                <h1 onClick={handleClick} className='text-red-600 font-extrabold text-3xl flex-1 cursor-pointer'>X</h1>
+                <a href={'https://ceramicslip.arthausdecorah.org/#/'+id} target='_blank' className='flex-1'><Button text="Edit this Form" /></a>
+            </div>
         <div className='flex flex-col items-center bg-gray-100 p-3 gap-7 max-w-[640px] w-full'>
             <h1 className="text-3xl sm:text-6xl givColor font-bold underline">ArtHaus Ceramic Slip</h1>
             <div className='w-full'>

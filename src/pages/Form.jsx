@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { use, useContext, useEffect, useState } from 'react'
 import { Context } from '../context/CeramicContext'
 import Button from '../components/Button'
 import axios from 'axios'
@@ -6,13 +6,24 @@ import {fetchData, submit } from '../crud'
 import TwoFields from '../components/admin/TwoFields'
 import FormComp from '../components/FormComp'
 import imageCompression from 'browser-image-compression';
+import { useParams } from 'react-router-dom'
 
 const Form = () => {
 
     const {esetUploadedFiles,euploadedFiles,setUploadedFiles,uploadedFiles,setUser,user,api,Cost,setCost,setEdit,edit,eCost,esetCost} = useContext(Context)
     const [loading, setLoading] = useState(false)
     const [formType, setFormType] = useState('submit')
+    const {editId} = useParams()
     const [id,setId] = useState('')
+
+    useEffect(() => {
+        if(editId){
+            console.log("Editing form with ID:", editId);
+            setFormType("retrieve")
+            setId(editId)
+            handleClick(new Event('click'),editId)
+        }
+    },[editId])
     
     const handleFileUpload = async (event,setUploadedFiles) => {
         const file = event.target.files[0]
@@ -90,8 +101,6 @@ const Form = () => {
 
     }
     useEffect(() => {
-        
-        
         
     },[edit])
 

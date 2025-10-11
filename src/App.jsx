@@ -17,7 +17,9 @@ function App() {
   return (
     <div>
     <Routes>
-      <Route path="/" element={<Form/>} />
+    <Route path="/" element={<Form/>} />
+    {/* Allow homepage to accept an id as a path param (e.g. /<id>) */}
+    <Route path="/:editId" element={<Form/>} />
       <Route path="/admin/wp-admin" element={<Admin/>} />
       <Route
                     path="/admin/dashboard"
