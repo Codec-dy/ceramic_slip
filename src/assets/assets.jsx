@@ -1,4 +1,4 @@
-import uploadIcon from './cloudUploadIcon.png';
+import uploadIcon from './cameraplaceholder.jpg';
 import deleteIcon from './deleteIcon.png';
 import placeholder from './placeholder.jpg';
 import menu from './menu.png';
