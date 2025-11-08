@@ -55,7 +55,7 @@ const FormComp = ({user,setUser,loading,handleDelete,handleSubmit,handleFileUplo
             <label htmlFor="file-upload" className='flex flex-row gap-5 mb-4 w-full border-2 border-gray-300 rounded-md p-2 items-center'>
             <img src={assets.uploadIcon} alt="Upload Icon" className='w-20 h-20' />
             <div>
-                <label htmlFor="file-upload" className='text-sm font-bold text-red-800'>Click on this box to Take/upload a picture of your work into the table below</label>
+                <label htmlFor="file-upload" className='text-sm font-bold text-red-700'>Click on this box to Take a picture of each item individually</label>
                 <p className='text-xs text-red-400'>Use this button as many times as neccessary to insert pictures into the table below. Make sure to enter your initials and price of each work</p>
             </div>
             <input type='file' onChange={(e)=>handleFileUpload(e,setUploadedFiles)} id='file-upload' className='w-full h-10 givColor hidden' placeholder='Upload a picture of your work' required/>
