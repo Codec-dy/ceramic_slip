@@ -9,7 +9,7 @@ const FormComp = ({user,setUser,loading,handleDelete,handleSubmit,handleFileUplo
     return (
     <form>
         
-            <p className='text-red-700 font-bold mb-4 text-center'>Submit one(1) form per per group</p>
+            <p className='text-red-700 font-bold mb-4 text-center'>Submit one(1) form per group</p>
         <> 
             <TwoFields user={user} setUser={setUser} Label1="Full Name" Label2="Date" type1="text" type2="date" placeholder1="Enter your full name" name1="name" name2="date" placeholder2="Enter Date"/>
             <TwoFields user={user} setUser={setUser} Label2="Email" Label1="Phone" type2="email" type1="Enter phone number" placeholder2="Enter Your Email" name1="phone" name2="email" placeholder1="Enter Your Phone Number"/>
